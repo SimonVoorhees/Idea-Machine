@@ -1,6 +1,8 @@
 <script setup>
 import IdeaItem from './IdeaItem.vue'
-import { ref, reactive, onMounted, onUnmounted, toRef } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, toRef, useTemplateRef } from 'vue'
+import domtoimage from 'dom-to-image'
+import FileSaver from 'file-saver'
 const props = defineProps(['group'])
 const ideas = toRef(() => {
   let newObj = []
@@ -13,6 +15,13 @@ const ideas = toRef(() => {
   }
   return reactive(newObj)
 })
+const IdeaGroupTemplateRef = useTemplateRef('IdeaGroup')
+const onClickDownload = (e) => {
+  console.log(IdeaGroupTemplateRef.value)
+  domtoimage.toBlob(IdeaGroupTemplateRef.value).then(function (blob) {
+    FileSaver.saveAs(blob, 'my-node.png')
+  })
+}
 
 const isDragging = ref(false)
 const mouseX = ref(0)
@@ -61,15 +70,18 @@ onUnmounted(() => {
 <template>
   <!-- 
  -->
-  <ul class="IdeaGroup">
-    <IdeaItem v-for="(object, index) in ideas" :id="index" :idea="object.idea" />
-    <!--
+  <section class="IdeaGroup-Wrapper" ref="IdeaGroup">
+    <ul class="IdeaGroup">
+      <IdeaItem v-for="(object, index) in ideas" :id="index" :idea="object.idea" />
+      <!--
       @mousedown.left="startDrag"
       class="draggable" :style="{
         left: object.dragX + 'px',
         top: object.dragY + 'px',
       }" -->
-  </ul>
+    </ul>
+  </section>
+  <button class="IdeaGroup-Download" @click="onClickDownload">&#8623;</button>
 </template>
 
 <style>
@@ -92,7 +104,7 @@ onUnmounted(() => {
   border-left: 8px solid var(--red);
   list-style: none;
   padding: 64px 64px 64px 36px;
-  margin: 256px auto;
+  margin: auto;
   font-size: 48px;
   display: flex;
   flex-direction: row;
@@ -106,5 +118,27 @@ onUnmounted(() => {
 }
 .IdeaGroup:first-of-type {
   margin-top: 32px;
+}
+.IdeaGroup-Wrapper{
+  padding: 8px;
+}
+.IdeaGroup-Download {
+  margin: 16px 16px 256px 0px;
+  background-color: var(--orange);
+  color: var(--cyan);
+  border: none;
+  font-size: 64px;
+  font-weight: 900;
+  padding-bottom: 0px;
+  align-self: flex-end;
+  background-color: var(--blue);
+  border-radius: 128px 256px;
+}
+.IdeaGroup-Download:hover {
+  color: var(--orange);
+}
+.IdeaGroup-Download:active {
+  background-color: var(--cyan);
+  color: var(--red);
 }
 </style>

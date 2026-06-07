@@ -80,6 +80,7 @@ const onSubmit = (e) => {
     margin-right: 16px;
 }
 .IdeaForm-Label {
+  color: var(--blue);
   font-size: 48px;
   text-align: right;
   text-wrap: nowrap;
@@ -126,5 +127,8 @@ const onSubmit = (e) => {
   margin: 0;
   padding: 8px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
