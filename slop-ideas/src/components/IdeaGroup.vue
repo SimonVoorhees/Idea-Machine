@@ -84,28 +84,27 @@ onUnmounted(() => {
 
 .IdeaGroup {
   position: static;
+  width: fit-content;
   background-color: var(--orange);
   color: var(--blue);
   border: 8px solid var(--blue);
   border-top: 8px solid var(--red);
   border-left: 8px solid var(--red);
   list-style: none;
-  padding: 128px 128px 128px 36px;
-  margin: 256px 16px;
+  padding: 64px 64px 64px 36px;
+  margin: 256px auto;
   font-size: 48px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 12px;
   font-family: yokelvision-font;
-  flex-grow: 1;
 }
 .IdeaGroup:last-of-type {
   margin-bottom: 8px;
 }
 .IdeaGroup:first-of-type {
   margin-top: 32px;
-  border-top: 8px solid var(--red);
 }
 </style>

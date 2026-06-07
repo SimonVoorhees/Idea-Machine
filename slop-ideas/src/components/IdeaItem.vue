@@ -65,7 +65,6 @@ function getRandomColor() {
 }
 const rotation = getRandomArbitrary(-90, 90) + 'deg'
 const randomMargin = `${getRandomArbitrary(0, 20)}, ${getRandomArbitrary(0, 20)}, ${getRandomArbitrary(0, 20)}, ${getRandomArbitrary(0, 20)},`
-const randomWidth = `${getRandomArbitrary(64, 256)}px`
 const randomBorderTop = `${getRandomArbitrary(0, 20)}px groove var(--red)`
 const randomBorderRight = `${getRandomArbitrary(0, 20)}px inset var(--red)`
 const randomBorderBottom = `${getRandomArbitrary(0, 20)}px outset var(--red)`
@@ -74,7 +73,6 @@ const randomColor = getRandomColor()
 const styleObject = {
   rotate: rotation,
   margin: randomMargin,
-  width: randomWidth,
   color: randomColor,
   textShadow: `0px 0px 7px var(--cyan)`
   // borderTop: randomBorderTop,
