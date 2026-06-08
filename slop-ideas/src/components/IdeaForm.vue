@@ -61,6 +61,7 @@ const onSubmit = (e) => {
   width: 480px;
   text-align: center;
   font-weight: 900;
+  transform: skew(20deg);
 }
 .IdeaForm {
   background-color: var(--orange);

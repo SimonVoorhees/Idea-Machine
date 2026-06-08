@@ -123,16 +123,17 @@ onUnmounted(() => {
   padding: 8px;
 }
 .IdeaGroup-Download {
-  margin: 16px 16px 256px 0px;
+  margin: 0px 16px 256px 0px;
   background-color: var(--orange);
   color: var(--cyan);
   border: none;
-  font-size: 64px;
+  font-size: 32px;
   font-weight: 900;
   padding-bottom: 0px;
   align-self: flex-end;
   background-color: var(--blue);
   border-radius: 128px 256px;
+  transform: skew(-25deg, 25deg);
 }
 .IdeaGroup-Download:hover {
   color: var(--orange);
