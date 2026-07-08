@@ -5,7 +5,7 @@ import IdeaForm from './components/IdeaForm.vue'
 </script>
 
 <template>
-    <IdeaForm />
+    <RouterView />
 </template>
 
 <style scoped>

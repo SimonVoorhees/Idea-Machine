@@ -1,13 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import IdeaItem from './IdeaItem.vue'
-import { ref } from 'vue'
 const props = defineProps(["ideas"]);
 </script>
 
 <template>
   <ul class="IdeaList">
     <!-- <IdeaItem v-for="idea in props.ideas" :idea="idea" /> -->
-    <li v-for="(idea, index) in props.ideas" v-if="index%2">
+    <li v-for="(idea, index) in props.ideas" v-if="(index)%2">
         <IdeaItem
             :idea="idea"
          />

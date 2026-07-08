@@ -1,8 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import IdeaItem from './IdeaItem.vue'
 import { ref, reactive, onMounted, onUnmounted, toRef, useTemplateRef } from 'vue'
 import domtoimage from 'dom-to-image'
 import FileSaver from 'file-saver'
+import { getRandomArbitrary } from '../utilities.js'
 const props = defineProps(['group'])
 const ideas = toRef(() => {
   let newObj = []
@@ -14,64 +15,69 @@ const ideas = toRef(() => {
     }
   }
   return reactive(newObj)
-})
+});
+const randomSkew = getRandomArbitrary(-1,1);
+
+const styleObject = {
+  transform: `skew(${randomSkew}deg, ${randomSkew}deg)`
+}
 const IdeaGroupTemplateRef = useTemplateRef('IdeaGroup')
-const onClickDownload = (e) => {
+const onClickDownload = (e:Event) => {
   console.log(IdeaGroupTemplateRef.value)
   domtoimage.toBlob(IdeaGroupTemplateRef.value).then(function (blob) {
     FileSaver.saveAs(blob, 'my-node.png')
   })
 }
 
-const isDragging = ref(false)
-const mouseX = ref(0)
-const mouseY = ref(0)
+// const isDragging = ref(false)
+// const mouseX = ref(0)
+// const mouseY = ref(0)
 
-const dragStartX = ref(0)
-const dragStartY = ref(0)
+// const dragStartX = ref(0)
+// const dragStartY = ref(0)
 
-const startDrag = (event) => {
-  isDragging.value = true
-  if (event?.target?.id !== undefined) {
-    dragStartX.value = event.clientX - ideas.value[Number(event.target.id)].dragX
-    dragStartY.value = event.clientY - ideas.value[Number(event.target.id)].dragY
-  } else if (event?.target?.parentElement?.id !== undefined) {
-    dragStartX.value = event.clientX - ideas.value[Number(event.target.parentElement.id)].dragX
-    dragStartY.value = event.clientY - ideas.value[Number(event.target.parentElement.id)].dragY
-  }
-  console.log(ideas.value[Number(event.target?.parentElement?.id)])
-}
-const handleDragMove = (event) => {
-  if (isDragging.value) {
-    if (event?.target?.id !== undefined) {
-      ideas.value[Number(event.target.id)].dragX = event.clientX - dragStartX.value
-      ideas.value[Number(event.target.id)].dragY = event.clientY - dragStartY.value
-    } else if (event?.target?.parentElement?.id !== undefined) {
-      ideas.value[Number(event.target.parentElement.id)].dragX = event.clientX - dragStartX.value
-      ideas.value[Number(event.target.parentElement.id)].dragY = event.clientY - dragStartY.value
-    }
-  }
-}
+// const startDrag = (event) => {
+//   isDragging.value = true
+//   if (event?.target?.id !== undefined) {
+//     dragStartX.value = event.clientX - ideas.value[Number(event.target.id)].dragX
+//     dragStartY.value = event.clientY - ideas.value[Number(event.target.id)].dragY
+//   } else if (event?.target?.parentElement?.id !== undefined) {
+//     dragStartX.value = event.clientX - ideas.value[Number(event.target.parentElement.id)].dragX
+//     dragStartY.value = event.clientY - ideas.value[Number(event.target.parentElement.id)].dragY
+//   }
+//   console.log(ideas.value[Number(event.target?.parentElement?.id)])
+// }
+// const handleDragMove = (event) => {
+//   if (isDragging.value) {
+//     if (event?.target?.id !== undefined) {
+//       ideas.value[Number(event.target.id)].dragX = event.clientX - dragStartX.value
+//       ideas.value[Number(event.target.id)].dragY = event.clientY - dragStartY.value
+//     } else if (event?.target?.parentElement?.id !== undefined) {
+//       ideas.value[Number(event.target.parentElement.id)].dragX = event.clientX - dragStartX.value
+//       ideas.value[Number(event.target.parentElement.id)].dragY = event.clientY - dragStartY.value
+//     }
+//   }
+// }
 
-const stopDrag = () => {
-  isDragging.value = false
-}
-onMounted(() => {
-  window.addEventListener('mousemove', handleDragMove)
-  window.addEventListener('mouseup', stopDrag)
-})
+// const stopDrag = () => {
+//   isDragging.value = false
+// }
+// onMounted(() => {
+//   window.addEventListener('mousemove', handleDragMove)
+//   window.addEventListener('mouseup', stopDrag)
+// })
 
-onUnmounted(() => {
-  window.removeEventListener('mousemove', handleDragMove)
-  window.removeEventListener('mouseup', stopDrag)
-})
+// onUnmounted(() => {
+//   window.removeEventListener('mousemove', handleDragMove)
+//   window.removeEventListener('mouseup', stopDrag)
+// })
 </script>
 
 <template>
   <!-- 
  -->
   <section class="IdeaGroup-Wrapper" ref="IdeaGroup">
-    <ul class="IdeaGroup">
+    <ul class="IdeaGroup" :style="styleObject">
       <IdeaItem v-for="(object, index) in ideas" :id="index" :idea="object.idea" />
       <!--
       @mousedown.left="startDrag"
@@ -103,7 +109,7 @@ onUnmounted(() => {
   border-top: 8px solid var(--red);
   border-left: 8px solid var(--red);
   list-style: none;
-  padding: 64px 64px 64px 36px;
+  padding: 82px 82px 82px 36px;
   margin: auto;
   font-size: 48px;
   display: flex;
